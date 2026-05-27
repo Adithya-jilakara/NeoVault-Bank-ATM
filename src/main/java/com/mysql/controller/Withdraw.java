@@ -2,60 +2,61 @@ package com.mysql.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-
+import jakarta.servlet.http.*;
 import com.myatm.dao.AccountDAO;
 import com.myatm.model.AccountinfoModel;
-
+import java.io.IOException;
 
 @WebServlet("/withdraw")
 public class Withdraw extends HttpServlet {
-	//private static final long serialVersionUID = 1L;
-   
-	
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-	        throws ServletException, IOException {
-	    
-	    try {
-	        String amt = request.getParameter("amount");
-	        int amount = Integer.parseInt(amt);
-	        
-	        HttpSession session = request.getSession();
-	        AccountinfoModel user = (AccountinfoModel) session.getAttribute("currentUser");
-	        if(user == null) {
-	            response.sendRedirect("atmpin.jsp");
-	            return;
-	        }
-	        
-	        int account_id = user.getAccount_id();
-	        AccountDAO ad = new AccountDAO();
-	        String result = ad.withdraw(account_id, amount);
-	        if(result.equals("success")) {
-	            // Update session balance (load latest from DB for accuracy)
-	            Double currentBalance = getLatestBalance(account_id, session);  // Implement helper below
-	            session.setAttribute("message", "Withdrawn ₹" + amount + ". New Balance: ₹" + currentBalance);
-	        } else {
-	            session.setAttribute("error", result.equals("insufficient") ? "Insufficient balance (min ₹100)!" : "Withdraw failed!");
-	        }
-	    } catch(Exception e) {
-	        e.printStackTrace();
-	        request.getSession().setAttribute("error", "Invalid amount!");
-	    }
-	    
-	    response.sendRedirect("atmsimulator.jsp");
-	}
 
-	private Double getLatestBalance(int account_id, HttpSession session) {
-	    AccountDAO ad = new AccountDAO();
-	    // Reuse your DAO logic or add getBalance method to return latest balance
-	    // For now, query DB as in deposit/withdraw
-	    return 0.0;  // Replace with actual query
-	}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
+
+        try {
+            int amount = Integer.parseInt(request.getParameter("amount"));
+
+            AccountinfoModel user = (AccountinfoModel) session.getAttribute("currentUser");
+
+            if (user == null) {
+                response.sendRedirect("atmpin.jsp");
+                return;
+            }
+
+            int account_id = user.getAccount_id();
+
+            AccountDAO ad = new AccountDAO();
+            String result = ad.withdraw(account_id, amount);
+
+            if (result.equals("success")) {
+                double currentBalance = ad.getBalance(account_id);
+
+                session.setAttribute("currentBalance", currentBalance);
+                session.setAttribute("message", "₹" + amount + " Withdrawn Successfully");
+                session.setAttribute("activeScreen", "withdrawScreen");
+
+            } else if (result.equals("insufficient")) {
+                session.setAttribute("error", "Insufficient balance!");
+                session.setAttribute("activeScreen", "withdrawScreen");
+
+            } else {
+                session.setAttribute("error", "Withdraw failed!");
+                session.setAttribute("activeScreen", "withdrawScreen");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            session.setAttribute("error", "Invalid amount!");
+            session.setAttribute("activeScreen", "withdrawScreen");
+        }
+
+        response.sendRedirect("atmsimulator.jsp");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.sendRedirect("atmsimulator.jsp");
+    }
 }

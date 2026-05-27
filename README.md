@@ -1,24 +1,35 @@
 
-A modern web-based ATM Simulator application built using Java, JSP, Servlet, and MySQL.
+# NeoVault Bank ATM Simulator
 
-This project simulates basic ATM banking operations such as account creation, secure PIN login, deposit, withdrawal, balance enquiry, and PIN change through an ATM-style user interface.
+A modern web-based ATM Simulator application built using Java, JSP, Servlet, and MySQL.This project simulates basic ATM banking operations such as account creation, secure PIN login, deposit, withdrawal, balance enquiry, and PIN change through an ATM-style user interface.
 
 ---
 
 ## Features
 
-- Create new bank account
-- Secure 4-digit PIN login
-- ATM-style dashboard
-- Deposit money
-- Withdraw money
-- Balance enquiry
+- Create New Account
+- Secure 4-Digit PIN Login
+- ATM Dashboard
+- Balance Enquiry
+- Deposit Cash
+- Withdraw Cash
 - Change PIN
-- Clear and cancel options
-- Session handling
-- MySQL database connectivity
-- Transaction acknowledgement messages
-- Responsive ATM-style user interface
+- Session Management
+- Transaction Acknowledgement Messages
+- MySQL Database Connectivity
+- Responsive ATM User Interface
+
+---
+
+## Project Highlights
+
+- Developed using Java, JSP, Servlets, JDBC and MySQL
+- Session-based user authentication
+- ATM-style responsive user interface
+- Real-time balance updates
+- Deposit and withdrawal transaction processing
+- Secure PIN change functionality
+- MySQL database integration
 
 ---
 
@@ -59,7 +70,7 @@ This project simulates basic ATM banking operations such as account creation, se
 ![Deposit Operation](screenshots/deposit-operation.png)
 
 ### Balance Enquiry
-![Balance Enquiry](screenshots/balance-enquiry.png)
+![Balance Enquiry](screenshots/check-balance.png)
 
 ### Change PIN
 ![Change PIN](screenshots/change-pin.png)
@@ -122,16 +133,30 @@ NeoVault-Bank-ATM/
 
 ## Future Improvements
 
-* Show transaction acknowledgement messages inside the ATM display screen
-* Add transaction history / mini statement
-* Improve form validation
-* Add admin dashboard
-* Add account locking after multiple wrong PIN attempts
-* Improve mobile responsiveness
-* Add better error handling
+- Transaction History / Mini Statement
+- Fund Transfer Between Accounts
+- Admin Dashboard
+- Receipt Generation
+- Account Locking After Multiple Failed PIN Attempts
+- Enhanced Validation
+- Mobile Responsive Layout
+- Email/SMS Notifications
 
 ---
 
 ## Author
 
-**Adithya Jilakara**
+Adithya Jilakara
+
+Aspiring Java Full Stack Developer
+
+Skills:
+- Java
+- JSP & Servlets
+- JDBC
+- JavaScript
+- MySQL
+- HTML
+- CSS
+- Bootstrap
+- Git & GitHub
